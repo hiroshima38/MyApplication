@@ -3,10 +3,10 @@
 package com.example.hiroshima.myapplication;
 
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     //アダプタークラスです。
     private MessageRecordsAdapter mAdapter;
@@ -34,6 +34,8 @@ public class MainActivity extends ActionBarActivity {
         //メイン画面のレイアウトをセットしています。ListView
         setContentView(R.layout.activity_main);
 
+
+
         //アダプターを作成します。newでクラスをインスタンス化しています。
         mAdapter = new MessageRecordsAdapter(this);
         //ListViewのViewを取得
@@ -41,7 +43,24 @@ public class MainActivity extends ActionBarActivity {
         //ListViewにアダプターをセット。
         listView.setAdapter(mAdapter);
         //一覧のデータを作成して表示します。
-        fetch();
+
+
+
+        final Button button = (Button) findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+            int click = 0;
+
+            @Override
+            public void onClick(View v) {
+                if(click > 0){
+                    Toast.makeText(getApplicationContext(), "既に表示されています", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "リストを表示します", Toast.LENGTH_SHORT).show();
+                    fetch();
+                    click++;
+                }
+            }
+        });
      }
 
 
@@ -103,28 +122,4 @@ public class MainActivity extends ActionBarActivity {
 
         return records;
     }
-
-    //デフォルトで作成されたメニューの関数です。未使用。
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 }

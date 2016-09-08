@@ -31,9 +31,6 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
         mImageLoader = new ImageLoader(VolleyApplication.getInstance().getRequestQueue(), new BitmapLruCache());
     }
 
-
-
-
     //表示するViewを返します。これがListVewの１つのセルとして表示されます。表示されるたびに実行されます。
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
