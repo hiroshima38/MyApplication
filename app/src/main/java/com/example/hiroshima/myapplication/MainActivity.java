@@ -48,17 +48,11 @@ public class MainActivity extends Activity {
 
         final Button button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
-            int click = 0;
-
             @Override
             public void onClick(View v) {
-                if(click > 0){
-                    Toast.makeText(getApplicationContext(), "既に表示されています", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "リストを表示します", Toast.LENGTH_SHORT).show();
-                    fetch();
-                    click++;
-                }
+                Toast.makeText(getApplicationContext(), "リストを表示します", Toast.LENGTH_SHORT).show();
+                button.setVisibility(View.GONE);
+                fetch();
             }
         });
      }
