@@ -6,6 +6,7 @@ package com.example.hiroshima.myapplication;
 import android.app.Application;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.kii.cloud.storage.Kii;
 
 //Applicationクラスを継承extend（コピーみたいなもの）しています。Applicationの機能がそのまま使えます。{}までがクラスです。
 //これはクラスの定義です。このクラスを使うにはnewなどをしてインスタンス化（実態を作る）してから使います。
@@ -27,6 +28,10 @@ public class VolleyApplication extends Application {
         mRequestQueue = Volley.newRequestQueue(this);
         //自分自身のインスタンス（newなどでクラスを実体化したもの）を代入しています。
         sInstance = this;
+        //Userで追加ここから
+        //KiiCloudの初期化。Applicationクラスで実行してください。キーは自分の値にかえる。
+        Kii.initialize(getApplicationContext(), "c590209a", "28c840e70b92e2553960ecd7b05a95b3", Kii.Site.JP);
+        //Userで追加ここまで
     }
     //インスタンスを返す関数（メソッドです）。クラスの中にある変数はこのように関数を通じて返すようにするのが一般的です。
     //synchronizedは同時に動作すると不具合が起きるときに宣言します。Volleyの仕様です。
