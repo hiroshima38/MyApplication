@@ -20,4 +20,11 @@
     <!-- Userで追加ここまで-->
     <string name="new_password">New password (4-50 length)</string>
     <string name="button_change">変更</string>
+    <string name="title_activity_post">PostActivity</string>
+    <!-- Postで追加ここから-->
+    <string name="attach_button">ImageAttach</string>
+    <string name="attach_camera_button">CameraAttach</string>
+    <string name="post_button">Post</string>
+    <string name="no_data_message">No Data</string>
+    <!-- Postで追加ここまで-->
 </resources>
