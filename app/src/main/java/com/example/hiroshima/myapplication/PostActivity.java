@@ -1,15 +1,21 @@
 //投稿するActivityです
 package com.example.hiroshima.myapplication;
 
+import android.Manifest;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +83,26 @@ public class PostActivity extends ActionBarActivity {
                 onPostButtonClicked(v);
             }
         });
+
+        //mogi
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            String[] permissions = new String[] {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+            ActivityCompat.requestPermissions(this, permissions, 1);
+        } else {
+            //処理
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED) {
+            String[] permissions = new String[] {
+                    Manifest.permission.CAMERA
+            };
+            ActivityCompat.requestPermissions(this, permissions, 1);
+        } else {
+            //処理
+        }
     }
     //画像の添付ボタンをおした時の処理
     public void onAttachFileButtonClicked(View v) {
@@ -94,24 +120,25 @@ public class PostActivity extends ActionBarActivity {
         //カメラは機種依存が大きく、いろいろサンプルを見たほうが良い
         //コメントはXperia用に作ったもの。不要。
         //カメラのインテントを作成
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //Activityを起動
-        startActivityForResult(Intent.createChooser(intent, "Camera"), IMAGE_CHOOSER_RESULTCODE);
-//        //現在時刻をもとに一時ファイル名を作成
-//        String filename = System.currentTimeMillis() + ".jpg";
-//        //設定を保存するパラメータを作成
-//        ContentValues values = new ContentValues();
-//        values.put(MediaStore.Images.Media.TITLE, filename);//ファイル名
-//        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");//ファイルの種類
-//        //設定した一時ファイルを作成
-//        mImageUri = getContentResolver().insert(
-//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//        //カメラのインテントを作成
-//        Intent intent = new Intent();
-//        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//カメラ
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);//画像の保存先
-//        //インテント起動
-//        startActivityForResult(intent, IMAGE_CHOOSER_RESULTCODE);
+        //startActivityForResult(Intent.createChooser(intent, "Camera"), IMAGE_CHOOSER_RESULTCODE);
+
+        //現在時刻をもとに一時ファイル名を作成
+        String filename = System.currentTimeMillis() + ".jpg";
+        //設定を保存するパラメータを作成
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, filename);//ファイル名
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");//ファイルの種類
+        //設定した一時ファイルを作成
+        mImageUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        //カメラのインテントを作成
+        Intent intent = new Intent();
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//カメラ
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);//画像の保存先
+        //インテント起動
+        startActivityForResult(intent, IMAGE_CHOOSER_RESULTCODE);
     }
     //画像を選択した後に実行されるコールバック関数。インテントの実行された後にコールバックされる。自動的に実行されます。
     @Override
@@ -164,9 +191,13 @@ public class PostActivity extends ActionBarActivity {
                 //一時ファイル名を作成。毎回上書き
                 filePath = cacheDir + File.separator + "upload.jpg";
                 File file = new File(filePath);
+                //
+                Matrix varMat = new Matrix();
+                varMat.postScale(0.5F, 0.5F);
+                Bitmap bmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), varMat, true);
                 //ビットマップをjpgに変換して一時的に保存する。
                 fos = new FileOutputStream(file);
-                bmp.compress(Bitmap.CompressFormat.JPEG, 95, fos);
+                bmp2.compress(Bitmap.CompressFormat.JPEG, 95, fos);
                 fos.flush();
                 fos.getFD().sync();
             } catch (Exception e) {
@@ -222,6 +253,7 @@ public class PostActivity extends ActionBarActivity {
         //画像をUPしてからmessagesに投稿。
         if (mImagePath != null) {
             //ファイルをUP、完了した時にpostMessagesを実行している。
+            showDialog();
             uploadFile(mImagePath);
         }else {
             //画像がないときはcommentだけ登録
@@ -314,6 +346,17 @@ public class PostActivity extends ActionBarActivity {
     void showAlert(String message) {
         DialogFragment newFragment = AlertDialogFragment.newInstance(R.string.operation_failed, message, null);
         newFragment.show(getFragmentManager(), "dialog");
+    }
+
+    //アップロード中のプログレス
+    private static ProgressDialog mProgressDialog;
+    private void showDialog() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("アップロード中...");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
     }
 
 
