@@ -31,4 +31,5 @@ dependencies {
     compile 'com.example.library:android-cloud-sdk-v2.4.11@aar'
     compile 'com.squareup.okhttp:okhttp:2.7.2'
     compile 'com.squareup.okhttp:okhttp-apache:2.7.2'
+    compile 'com.facebook.android:facebook-android-sdk:3.20.0'
 }

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
     <application
         android:name=".VolleyApplication"
         android:allowBackup="true"
@@ -28,6 +29,19 @@
             android:name=".UserActivity"
             android:label="@string/title_activity_user" >
         </activity>
+        <activity
+            android:name=".NewUserActivity"
+            android:label="@string/title_activity_new_user" >
+        </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
+
+        <activity
+            android:name="com.kii.cloud.storage.social.connector.KiiSocialNetworkConnectorLoginActivity"
+            android:label="@string/app_name" />
+        <activity android:name="com.facebook.LoginActivity" />
     </application>
 
 </manifest>

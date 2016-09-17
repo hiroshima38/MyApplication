@@ -1,10 +1,10 @@
 <!-- ユーザー登録・ログインのレイアウトです。KiiCloudのチュートリアルから持ってきました。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:context=".UserActivity"
-        android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".UserActivity"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -52,29 +52,21 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingTop="2dip" >
 
             <Button
-                android:id="@+id/login_button"
-                android:layout_width="match_parent"
+                android:id="@+id/signup_button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight="1"
                 android:minWidth="100dip"
-                android:text="@string/log_in"
+                android:layout_marginRight="4dip"
+                android:text="@string/sign_up_new"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/signup_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:minWidth="100dip"
-                android:layout_marginRight="4dip"
-                android:text="@string/sign_up"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
