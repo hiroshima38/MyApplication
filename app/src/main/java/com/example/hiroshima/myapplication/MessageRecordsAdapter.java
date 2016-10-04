@@ -45,7 +45,7 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
         TextView textView2 = (TextView) convertView.findViewById(R.id.text1);
 
         //詳細画面への遷移
-        //Cell cell =(Cell)
+       
 
 
 
