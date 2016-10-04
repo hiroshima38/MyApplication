@@ -41,15 +41,18 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
 
         //レイアウトにある画像と文字のViewを所得します。
         NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.image1);
-        TextView textView = (TextView) convertView.findViewById(R.id.text1);
+        TextView textView = (TextView) convertView.findViewById(R.id.text2);
+        TextView textView2 = (TextView) convertView.findViewById(R.id.text1);
+
+        //詳細画面への遷移
+        //Cell cell =(Cell)
+
 
 
         //webリンクを制御するプログラムはここから
-        // TextView に LinkMovementMethod を登録します
+        //TextView に LinkMovementMethod を登録します
         //TextViewをタップした時のイベントリスナー（タップの状況を監視するクラス）を登録します。onTouchにタップした時の処理を記述します。buttonやほかのViewも同じように記述できます。
         textView.setOnTouchListener(new ViewGroup.OnTouchListener() {
-
-
             //タップした時の処理
             @Override
             public boolean onTouch(final View view, MotionEvent event) {
@@ -96,7 +99,8 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
         //mImageLoaderを使って画像をダウンロードし、Viewにセットします。
         imageView.setImageUrl(imageRecord.getImageUrl(), mImageLoader);
         //Viewに文字をセットします。
-        textView.setText(imageRecord.getComment());
+        textView.setText(imageRecord.getMainText());
+        textView2.setText(imageRecord.getComment());
         //1つのセルのViewを返します。
         return convertView;
     }

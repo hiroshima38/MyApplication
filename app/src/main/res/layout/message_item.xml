@@ -13,13 +13,35 @@
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:id="@+id/image1"/>
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
 
-    <TextView
-        android:autoLink="web"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAppearance="?android:textAppearanceLarge"
-        tools:text="comment"
-        android:id="@+id/text1"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:textAppearance="?android:textAppearanceLarge"
+           tools:text="comment"
+           android:id="@+id/text1"/>
+
+       <View
+           android:layout_width="wrap_content"
+           android:layout_height="1dp"
+           android:background="@android:color/darker_gray"/>
+
+       <TextView
+           android:autoLink="web"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:textAppearance="?android:textAppearanceLarge"
+           tools:text="mainText"
+           android:id="@+id/text2"/>
+
+   </LinearLayout>
+
+
+
 </LinearLayout>

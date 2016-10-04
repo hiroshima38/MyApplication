@@ -1,15 +1,20 @@
 //1つのセルにあるデータを保存するためのデータクラスです。
 package com.example.hiroshima.myapplication;
 
+//ListView2ではデータクラスにidを追加してください。
 public class MessageRecord {
     //保存するデータ全てを変数で定義します。
     private String imageUrl;
+    private String mainText;
     private String comment;
+    private String id;
 
     //データを１つ作成する関数です。項目が増えたら増やしましょう。
-    public MessageRecord(String imageUrl, String comment) {
+    public MessageRecord(String id,String imageUrl,String comment, String mainText) {
         this.imageUrl = imageUrl;
+        this.mainText = mainText;
         this.comment = comment;
+        this.id = id;
     }
     //それぞれの項目を返す関数です。項目が増えたら増やしましょう。
     public String getComment() {
@@ -17,5 +22,11 @@ public class MessageRecord {
     }
     public String getImageUrl() {
         return imageUrl;
+    }
+    public String getMainText() {
+        return mainText;
+    }
+    public String getId() {
+        return id;
     }
 }

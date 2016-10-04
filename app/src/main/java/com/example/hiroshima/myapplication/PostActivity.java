@@ -51,6 +51,7 @@ public class PostActivity extends ActionBarActivity {
     private String comment;
     //カメラで撮影した画像のuri
     private Uri mImageUri;
+    private String mainText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,7 @@ public class PostActivity extends ActionBarActivity {
         //インテント起動
         startActivityForResult(intent, IMAGE_CHOOSER_RESULTCODE);
     }
+
     //画像を選択した後に実行されるコールバック関数。インテントの実行された後にコールバックされる。自動的に実行されます。
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -240,7 +242,10 @@ public class PostActivity extends ActionBarActivity {
 
     //投稿ボタンを御した時の処理
     public void onPostButtonClicked(View v) {
-        //入力文字を得る
+        //mainTexを得る
+        EditText mMainTextField = (EditText) (findViewById(R.id.mainText_field));
+        mainText = mMainTextField.getText().toString();
+        //入力文字を得る(title)
         EditText mCommentField = (EditText) (findViewById(R.id.comment_field));
         comment = mCommentField.getText().toString();
         //Log.d("mogi comment", ":" + comment + ":");
@@ -256,7 +261,7 @@ public class PostActivity extends ActionBarActivity {
             showDialog();
             uploadFile(mImagePath);
         }else {
-            //画像がないときはcommentだけ登録
+            //画像がないときはcommentとmainTextだけ登録
             postMessages(null);
         }
     }
@@ -267,6 +272,7 @@ public class PostActivity extends ActionBarActivity {
         KiiObject object = bucket.object();
         //Json形式でKeyのcommentをセット.{"comment":"こめんとです","imageUrl":"http://xxx.com/xxxx"}
         object.set("comment", comment);
+        object.set("mainText", mainText);
         //画像があるときだけセット
         if(url != null) {
             object.set("imageUrl", url);

@@ -13,7 +13,15 @@
             android:id="@+id/comment_field"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:hint="タイトル"
              >
+        </EditText>
+        <EditText
+            android:id="@+id/mainText_field"
+            android:layout_width="fill_parent"
+            android:layout_height="135dp"
+            android:hint="本文"
+            >
         </EditText>
         <ImageView
             android:id="@+id/image_view1"
