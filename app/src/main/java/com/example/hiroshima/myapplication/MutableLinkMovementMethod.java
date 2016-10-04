@@ -1,5 +1,4 @@
-//http://oigami.hatenablog.com/entry/2014/11/08/082615 をそのまま利用しています。
-//TextViewのリンクで自由にプログラムを制御するには複雑なので、誰かが作ったクラスを利用したりします。使い方だけ覚えればOK.
+//http://oigami.hatenablog.com/entry/2014/11/08/082615
 package com.example.hiroshima.myapplication;
 
 import android.net.Uri;
@@ -12,30 +11,15 @@ import android.text.style.URLSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-/**
- * Htmlテキストのリンククリックアクションをオーバーライドするためのクラス。<br>
- *
- * original source is android.text.method.LinkMovementMethod.java
- *
- * @author S.Kamba
- *
- */
 public class MutableLinkMovementMethod extends LinkMovementMethod {
 
-    /**
-     * Urlのリンクをタップした時のイベントを受け取るリスナー
-     *
-     */
+
     public interface OnUrlClickListener{
         public abstract void onUrlClick(TextView widget, Uri uri);
     }
 
-    /** Urlクリックリスナー */
     OnUrlClickListener listener = null;
 
-    /*
-     * Urlクリックリスナーを登録
-     */
     public void setOnUrlClickListener(OnUrlClickListener l){
         listener = l;
     }
@@ -44,7 +28,6 @@ public class MutableLinkMovementMethod extends LinkMovementMethod {
     public boolean onTouchEvent(TextView widget, Spannable buffer,
                                 MotionEvent event) {
 
-        // LinkMovementMethod#onTouchEventそのまんま
 
         int action = event.getAction();
 

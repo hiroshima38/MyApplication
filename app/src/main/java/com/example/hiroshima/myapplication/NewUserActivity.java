@@ -32,20 +32,14 @@ public class NewUserActivity extends ActionBarActivity {
 
     protected void CreateMyView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_new_user);
-        //EditTextのビューを探します
         mUsernameField = (EditText) findViewById(R.id.username_field);
         mPasswordField = (EditText) findViewById(R.id.password_field);
-        //パスワードを隠す設定
         mPasswordField.setTransformationMethod(new PasswordTransformationMethod());
-        //パスワードの入力文字を制限する。参考：http://techbooster.jpn.org/andriod/ui/3857/
         mPasswordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        //登録ボタン
         Button signupBtn = (Button) findViewById(R.id.signup_button);
-        //登録ボタンをクリックした時の処理を設定
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //登録処理
                 onSignupButtonClicked(v);
             }
         });
@@ -58,15 +52,12 @@ public class NewUserActivity extends ActionBarActivity {
 
     //登録処理
     public void onSignupButtonClicked(View v) {
-        //IMEを閉じる
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-        //入力文字を得る
         String username = mUsernameField.getText().toString();
         String password = mPasswordField.getText().toString();
         try {
-            //KiiCloudのユーザ登録処理
             KiiUser user = KiiUser.createWithUsername(username);
             user.register(callback, password);
         } catch (Exception e) {
@@ -76,28 +67,19 @@ public class NewUserActivity extends ActionBarActivity {
 
     //新規登録、ログインの時に呼び出されるコールバック関数
     KiiUserCallBack callback = new KiiUserCallBack() {
-        //ログインが完了した時に自動的に呼び出される。自動ログインの時も呼び出される
         @Override
         public void onLoginCompleted(int token, KiiUser user, Exception e) {
-            // setFragmentProgress(View.INVISIBLE);
             if (e == null) {
-                //自動ログインのためにSharedPreferenceに保存。アプリのストレージ。参考：http://qiita.com/Yuki_Yamada/items/f8ea90a7538234add288
                 SharedPreferences pref = getSharedPreferences(getString(R.string.save_data_name), Context.MODE_PRIVATE);
                 pref.edit().putString(getString(R.string.save_token), user.getAccessToken()).apply();
 
-                // Intent のインスタンスを取得する。getApplicationContext()で自分のコンテキストを取得。遷移先のアクティビティーを.classで指定
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                // 遷移先の画面を呼び出す
                 startActivity(intent);
-                //戻れないようにActivityを終了します。
                 finish();
             } else {
-                //eがKiiCloud特有のクラスを継承している時
                 if (e instanceof CloudExecutionException)
-                    //KiiCloud特有のエラーメッセージを表示。フォーマットが違う
                     showAlert(R.string.operation_failed, Util.generateAlertMessage((CloudExecutionException) e), null);
                 else
-                    //一般的なエラーを表示
                     showAlert(R.string.operation_failed, e.getLocalizedMessage(), null);
             }
         }
@@ -105,23 +87,16 @@ public class NewUserActivity extends ActionBarActivity {
         @Override
         public void onRegisterCompleted(int token, KiiUser user, Exception e) {
             if (e == null) {
-                //自動ログインのためにSharedPreferenceに保存。アプリのストレージ。参考：http://qiita.com/Yuki_Yamada/items/f8ea90a7538234add288
                 SharedPreferences pref = getSharedPreferences(getString(R.string.save_data_name), Context.MODE_PRIVATE);
                 pref.edit().putString(getString(R.string.save_token), user.getAccessToken()).apply();
 
-                // Intent のインスタンスを取得する。getApplicationContext()で自分のコンテキストを取得。遷移先のアクティビティーを.classで指定
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                // 遷移先の画面を呼び出す
                 startActivity(intent);
-                //戻れないようにActivityを終了します。
                 finish();
             } else {
-                //eがKiiCloud特有のクラスを継承している時
                 if (e instanceof CloudExecutionException)
-                    //KiiCloud特有のエラーメッセージを表示
                     showAlert(R.string.operation_failed, Util.generateAlertMessage((CloudExecutionException) e), null);
                 else
-                    //一般的なエラーを表示
                     showAlert(R.string.operation_failed, e.getLocalizedMessage(), null);
             }
         }

@@ -1,4 +1,4 @@
-//ダイアログのクラスです。DialogFragmentを継承しています。KiiCloudのチュートリアルからコピー。
+//ダイアログのクラス。DialogFragment。KiiCloudのチュートリアルからコピー。
 package com.example.hiroshima.myapplication;
 
 import android.app.AlertDialog;

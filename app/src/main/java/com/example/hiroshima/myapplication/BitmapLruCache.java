@@ -1,4 +1,4 @@
-//画像をメモリにキャッシュするクラスです。メモリの1/8まで使います。汎用的なクラスなのでどのアプリでも使えます。
+//画像をメモリにキャッシュするクラス。
 package com.example.hiroshima.myapplication;
 
 import android.graphics.Bitmap;

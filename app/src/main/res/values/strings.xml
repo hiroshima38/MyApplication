@@ -5,7 +5,6 @@
     <string name="web_action_settings">終了</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="title_activity_detail">Detail</string>
-    <!-- Userで追加ここから-->
     <string name="enter_username">Enter username (3-64 length)</string>
     <string name="enter_password">Enter password (4-50 length)</string>
     <string name="sign_up">新規登録の方はこちら</string>
@@ -17,14 +16,11 @@
     <string name="save_token">save_token</string>
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
-    <!-- Userで追加ここまで-->
     <string name="new_password">New password (4-50 length)</string>
     <string name="button_change">変更</string>
     <string name="title_activity_post">PostActivity</string>
-    <!-- Postで追加ここから-->
     <string name="attach_button">ImageAttach</string>
     <string name="attach_camera_button">CameraAttach</string>
     <string name="post_button">Post</string>
     <string name="no_data_message">No Data</string>
-    <!-- Postで追加ここまで-->
 </resources>

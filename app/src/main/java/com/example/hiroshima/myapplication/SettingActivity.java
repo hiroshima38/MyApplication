@@ -19,9 +19,6 @@ public class SettingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        //usernameの取得
-        //passwordの取得
-
         //新しいパスワードのEditText
 //        EditText newpassword = (EditText) findViewById(R.id.password_new);
 //

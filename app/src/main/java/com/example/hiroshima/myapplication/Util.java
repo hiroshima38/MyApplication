@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import com.kii.cloud.storage.exception.CloudExecutionException;
 
 public class Util {
-    //KiiCloudのエラーメッセージを取り出すときに使います。
+    //KiiCloudのエラーメッセージ.
     public static String generateAlertMessage(CloudExecutionException ex) {
         StringBuffer sb = new StringBuffer();
         sb.append("KiiCloud returned error response.");

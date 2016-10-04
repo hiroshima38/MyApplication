@@ -1,4 +1,3 @@
-<!-- 起動時のメイン画面のレイアウトです。ListViewが一覧表示をします。id=@+id/xxでViewにidを付与します  -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
