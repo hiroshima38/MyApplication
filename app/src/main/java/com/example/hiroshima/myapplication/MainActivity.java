@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,6 +38,8 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     private MessageRecordsAdapter mAdapter;
+    private final MainActivity self = this;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +59,20 @@ public class MainActivity extends ActionBarActivity {
         //メイン画面のレイアウトをセット。ListView
         setContentView(R.layout.activity_main);
 
-
-
         mAdapter = new MessageRecordsAdapter(this);
         ListView listView = (ListView) findViewById(R.id.mylist);
         listView.setAdapter(mAdapter);
-     }
+
+        // SwipeRefreshLayoutの設定
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.red, R.color.green, R.color.blue, R.color.yellow);
+    }
     //KiiCLoud対応のfetch。
     //一覧のデータを作成して表示。
     private void fetch() {
         //KiiCloudの検索条件を作成。全件。
         KiiQuery query = new KiiQuery();
-        //ソート条件を設定。日付の降順
         query.sortByDesc("_created");
         //バケットmessagesを検索する。最大200件
         Kii.bucket("messages")
@@ -96,6 +103,21 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
         fetch();
     }
+
+    //SwipeRefresh
+    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            fetch();
+            // 3秒待機
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }, 2000);
+        }
+    };
 
 
     @Override

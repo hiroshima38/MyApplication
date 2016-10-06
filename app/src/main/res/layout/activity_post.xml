@@ -13,7 +13,7 @@
             android:id="@+id/comment_field"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="タイトル"
+            android:hint="ニックネーム"
              >
         </EditText>
         <EditText

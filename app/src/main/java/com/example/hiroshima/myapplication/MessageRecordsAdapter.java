@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -37,8 +38,25 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
         TextView textView = (TextView) convertView.findViewById(R.id.text2);
         TextView textView2 = (TextView) convertView.findViewById(R.id.text1);
 
-        //詳細画面への遷移
+        final MessageRecord messageRecord = getItem(position);
 
+        //詳細画面への遷移
+        LinearLayout cell = (LinearLayout)convertView.findViewById(R.id.cell);
+        cell.setOnClickListener(new ViewGroup.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                LinearLayout cell = (LinearLayout) view;
+                // Intent のインスタンスを取得する。view.getContext()でViewの自分のアクティビティーのコンテキストを取得。遷移先のアクティビティーを.classで指定
+                Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                // 渡したいデータとキーを指定する。urlという名前でリンクの文字列を渡しています。
+                intent.putExtra("comment", messageRecord.getComment());
+                intent.putExtra("image_url", messageRecord.getImageUrl());
+                intent.putExtra("mainText", messageRecord.getMainText());
+                intent.putExtra("id", messageRecord.getId());
+                // 遷移先の画面を呼び出す
+                view.getContext().startActivity(intent);
+            }
+        });
 
 
 
