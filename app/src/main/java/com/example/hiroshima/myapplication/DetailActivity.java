@@ -43,7 +43,6 @@ public class DetailActivity extends ActionBarActivity {
         TextView textViewComment1 = (TextView) findViewById(R.id.comment1);
         TextView textViewMainText1 = (TextView) findViewById(R.id.mainText1);
         TextView textViewUrl1 = (TextView) findViewById(R.id.url1);
-
         NetworkImageView imageView = (NetworkImageView) findViewById(R.id.image_view1);
 
         textViewComment1.setText(comment);

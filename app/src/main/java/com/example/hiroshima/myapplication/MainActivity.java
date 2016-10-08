@@ -90,8 +90,9 @@ public class MainActivity extends ActionBarActivity {
                             String url = obj.getString("imageUrl", "");
                             String mainText = obj.getString("mainText", "");
                             int goodCount = obj.getInt("goodCount", 0);
+                            int veryGoodCount = obj.getInt("veryGoodCount", 0);
 
-                            MessageRecord record = new MessageRecord(id, url, title, mainText, goodCount);
+                            MessageRecord record = new MessageRecord(id, url, title, mainText, goodCount, veryGoodCount);
                             records.add(record);
                         }
                         mAdapter.setMessageRecords(records);

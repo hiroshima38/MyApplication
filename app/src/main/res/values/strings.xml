@@ -26,4 +26,6 @@
     <string name="title_activity_edit">EditActivity</string>
     <string name="good">いいね</string>
     <string name="good_done">いいねしました</string>
+    <string name="veryGood">超いいね</string>
+    <string name="veryGood_done">超いいねしました</string>
 </resources>

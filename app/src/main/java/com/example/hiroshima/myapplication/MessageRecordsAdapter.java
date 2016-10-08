@@ -96,13 +96,16 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
         textView.setText(imageRecord.getMainText());
         textView2.setText(imageRecord.getComment());
 
-        Button buttonView = (Button) convertView.findViewById(R.id.button1);
-        buttonView.setText(getContext().getString(R.string.good)+":"+imageRecord.getGoodCount());
+        Button buttonView1 = (Button) convertView.findViewById(R.id.button1);
+        buttonView1.setText(getContext().getString(R.string.good)+":"+imageRecord.getGoodCount());
+        Button buttonView2 = (Button) convertView.findViewById(R.id.button2);
+        buttonView2.setText(getContext().getString(R.string.veryGood)+":"+imageRecord.getVeryGoodCount());
 
-        buttonView.setOnClickListener(new View.OnClickListener() {
+        //いいねボタン機能
+        buttonView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Button buttonView = (Button) view;
+                Button buttonView1 = (Button) view;
                 MessageRecord messageRecord = getItem(position);
                 Uri objUri = Uri.parse("kiicloud://buckets/" + "messages" + "/objects/" + messageRecord.getId());
                 KiiObject object = KiiObject.createByUri(objUri);
@@ -117,6 +120,31 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
                         messageRecord.setGoodCount(messageRecord.getGoodCount() + 1);
                         notifyDataSetChanged();
                         Toast.makeText(getContext(), getContext().getString(R.string.good_done), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+        //超いいねボタン機能
+        buttonView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button buttonView2 = (Button) view;
+                MessageRecord messageRecord = getItem(position);
+                Uri objUri = Uri.parse("kiicloud://buckets/" + "messages" + "/objects/" + messageRecord.getId());
+                KiiObject object = KiiObject.createByUri(objUri);
+                object.set("veryGoodCount", messageRecord.getVeryGoodCount() + 1);
+                object.save(new KiiObjectCallBack() {
+                    @Override
+                    public void onSaveCompleted(int token, KiiObject object, Exception exception) {
+                        if (exception != null) {
+                            return;
+                        }
+                        MessageRecord messageRecord = getItem(position);
+                        messageRecord.setVeryGoodCount(messageRecord.getVeryGoodCount() + 1);
+                        notifyDataSetChanged();
+                        Toast.makeText(getContext(), getContext().getString(R.string.veryGood_done), Toast.LENGTH_SHORT).show();
                     }
                 });
 
