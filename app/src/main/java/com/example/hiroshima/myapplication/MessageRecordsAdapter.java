@@ -11,11 +11,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.kii.cloud.storage.KiiObject;
+import com.kii.cloud.storage.callback.KiiObjectCallBack;
 
 import java.util.List;
 
@@ -29,7 +33,7 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_item, parent, false);
         }
@@ -46,14 +50,11 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
             @Override
             public void onClick(View view) {
                 LinearLayout cell = (LinearLayout) view;
-                // Intent のインスタンスを取得する。view.getContext()でViewの自分のアクティビティーのコンテキストを取得。遷移先のアクティビティーを.classで指定
                 Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                // 渡したいデータとキーを指定する。urlという名前でリンクの文字列を渡しています。
                 intent.putExtra("comment", messageRecord.getComment());
                 intent.putExtra("image_url", messageRecord.getImageUrl());
                 intent.putExtra("mainText", messageRecord.getMainText());
                 intent.putExtra("id", messageRecord.getId());
-                // 遷移先の画面を呼び出す
                 view.getContext().startActivity(intent);
             }
         });
@@ -94,6 +95,35 @@ public class MessageRecordsAdapter extends ArrayAdapter<MessageRecord> {
         imageView.setImageUrl(imageRecord.getImageUrl(), mImageLoader);
         textView.setText(imageRecord.getMainText());
         textView2.setText(imageRecord.getComment());
+
+        Button buttonView = (Button) convertView.findViewById(R.id.button1);
+        buttonView.setText(getContext().getString(R.string.good)+":"+imageRecord.getGoodCount());
+
+        buttonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button buttonView = (Button) view;
+                MessageRecord messageRecord = getItem(position);
+                Uri objUri = Uri.parse("kiicloud://buckets/" + "messages" + "/objects/" + messageRecord.getId());
+                KiiObject object = KiiObject.createByUri(objUri);
+                object.set("goodCount", messageRecord.getGoodCount() + 1);
+                object.save(new KiiObjectCallBack() {
+                    @Override
+                    public void onSaveCompleted(int token, KiiObject object, Exception exception) {
+                        if (exception != null) {
+                            return;
+                        }
+                        MessageRecord messageRecord = getItem(position);
+                        messageRecord.setGoodCount(messageRecord.getGoodCount() + 1);
+                        notifyDataSetChanged();
+                        Toast.makeText(getContext(), getContext().getString(R.string.good_done), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+
         return convertView;
     }
     public void setMessageRecords(List<MessageRecord> objects) {

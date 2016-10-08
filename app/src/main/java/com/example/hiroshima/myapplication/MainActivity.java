@@ -74,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
         //KiiCloudの検索条件を作成。全件。
         KiiQuery query = new KiiQuery();
         query.sortByDesc("_created");
-        //バケットmessagesを検索する。最大200件
+        //バケットmessagesを検索。最大200件
         Kii.bucket("messages")
                 .query(new KiiQueryCallBack<KiiObject>() {
                     @Override
@@ -89,8 +89,9 @@ public class MainActivity extends ActionBarActivity {
                             String title = obj.getString("comment", "");
                             String url = obj.getString("imageUrl", "");
                             String mainText = obj.getString("mainText", "");
+                            int goodCount = obj.getInt("goodCount", 0);
 
-                            MessageRecord record = new MessageRecord(id, url, title, mainText);
+                            MessageRecord record = new MessageRecord(id, url, title, mainText, goodCount);
                             records.add(record);
                         }
                         mAdapter.setMessageRecords(records);
@@ -109,7 +110,6 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             fetch();
-            // 3秒待機
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
