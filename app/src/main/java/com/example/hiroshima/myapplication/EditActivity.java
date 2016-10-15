@@ -1,9 +1,11 @@
 package com.example.hiroshima.myapplication;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 
 public class EditActivity extends ActionBarActivity {
@@ -12,7 +14,15 @@ public class EditActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
